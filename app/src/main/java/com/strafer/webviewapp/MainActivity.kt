@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.kevinnzou.web.LoadingState
 import com.kevinnzou.web.WebView
 import com.kevinnzou.web.rememberWebViewState
@@ -24,26 +25,10 @@ class MainActivity : ComponentActivity() {
         // enableEdgeToEdge()
         setContent {
             WebViewAppTheme {
-                Column {
-                    val testLink = "https://prokatis.ru"
-                    var textFieldValue by rememberSaveable { mutableStateOf(testLink) }
-                    TextField(
-                        value = textFieldValue,
-                        onValueChange = { newValue -> textFieldValue = newValue },
-                    )
-                    val state = rememberWebViewState(testLink)
-                    Text(text = "${state.pageTitle}")
-                    val loadingState = state.loadingState
-                    if (loadingState is LoadingState.Loading) {
-                        LinearProgressIndicator(
-                            progress = loadingState.progress,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                    WebView(
-                        state
-                    )
-                }
+                val navHostController = rememberNavController()
+                SetupNavHost(
+                    navController = navHostController
+                )
             }
         }
     }
