@@ -31,7 +31,8 @@ fun WebViewScreen(
         }
 
         WebView(
-            state
+            state,
+            onCreated = { it.settings.javaScriptEnabled = true }
         )
     }
 }
